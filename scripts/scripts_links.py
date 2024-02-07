@@ -22,7 +22,7 @@ def extract_description(linked_page_soup):
   else:
     return "description not found"
 
-
+#extract date 
 def extract_date(linked_page_soup):
   date_element = linked_page_soup.find_all("p", string=lambda text: "date" in text)
   if date_element:

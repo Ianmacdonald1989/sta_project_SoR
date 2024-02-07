@@ -12,16 +12,21 @@ print(links[1])
 
 
 
-# edit links
+# retrive web links
 for text, link in links:  # Iterate over the links from the Excel sheet
-    reponse = requests.get(link)
+    response = requests.get(link)
     response.raise_for_status()
     html_content = response.text
     webbrowser.open(link)
 
+#reggex
+soup = BeautifulSoup(html_content, 'html.parser')
+for tag in soup.find_all(True):
+    tag.string = re.sub(r'\s+',', tag.string')
+
 
 #   Fetch and clean the HTML
-#   cleaned_data = fetch_and_parse(link)  # Call your function
+#   cleaned_data = fetch_and_parse(link)  # function being called 
 
 #   if cleaned_data:
 #     # logic for processing 
