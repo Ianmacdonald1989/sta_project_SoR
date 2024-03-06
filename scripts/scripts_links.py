@@ -15,7 +15,7 @@ def extract_reference_code(linked_page_soup):
 
 # description data
 def extract_description(linked_page_soup):
-  description_element = linked_page_soup.find("h2")
+  description_element = linked_page_soup.find("tbody")
 
   if description_element:
     return description_element.text.strip()
