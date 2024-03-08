@@ -24,13 +24,13 @@ def extract_description(linked_page_soup):
 
 #extract date 
 def extract_date(linked_page_soup):
-  date_element = linked_page_soup.find_all("p", string=lambda text: "date" in text)
+  date_element = linked_page_soup.find_all("p", string=lambda text: text.strip().isdigit() and "-" in text)
+
   if date_element:
-    return date_element[0].text.strip()
+    date_text = date_element.find("span").text.strip()
+    return date_text
   else:
     return "date not found"
-
-
 
 
 # URL of the HTML page
