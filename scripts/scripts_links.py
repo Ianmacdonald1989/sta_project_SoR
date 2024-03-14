@@ -31,6 +31,15 @@ def extract_date(linked_page_soup):
     return date_text
   else:
     return "date not found"
+  
+#extract extend
+def extract_extent(linked_page_soup):
+  extent_element = linked_page_soup.find("p", string="extent") 
+
+  if extent_element:
+    return extent_element.text.strip()
+  else:
+    return "extent not found"
 
 
 # URL of the HTML page
@@ -55,18 +64,19 @@ for catalogue_link in soup.find_all('p'):
     text = link.text.strip()
     url = link['href']
 
-    # getting the reference code from individual links
+    # getting data the from individual links
     try:
       response = requests.get(url)  # fetch linked page
       linked_page_soup = BeautifulSoup(response.content, 'html.parser')
       reference_code = extract_reference_code(linked_page_soup)
       description = extract_description(linked_page_soup)
       date_element = extract_date(linked_page_soup)
-      catalogue_rows.append([text, url, reference_code, description, date_element])
+      extent_element = extract_extent(linked_page_soup)
+      catalogue_rows.append([reference_code, text, url, description, date_element, extent_element])
 
     except Exception as e:
       print(f"Error processing link {url}: {e}")
-      catalogue_rows.append([text, url, reference_code, description, '', ''])  # will handle any errors
+      catalogue_rows.append([reference_code, text, url, description, extent_element, '', ''])  # will handle any errors
   else:
     catalogue_rows.append([catalogue_link.text.strip(), '', ''])
 
