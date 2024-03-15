@@ -2,6 +2,7 @@ import openpyxl
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
+import re
 
 
 # Reference code data
@@ -23,15 +24,22 @@ def extract_description(linked_page_soup):
     return "description not found"
 
 #extract date 
-def extract_date(linked_page_soup):
-  date_element = linked_page_soup.find_all("p", string=lambda text: text.strip().isdigit() and "-" in text)
+import re
 
-  if date_element:
-    date_text = date_element.find("span").text.strip()
-    return date_text
-  else:
-    return "date not found"
-  
+def extract_date(linked_page_soup):
+    if linked_page_soup is not None:  
+        try:
+            match = re.search(r"\d{4}-\d{4}", linked_page_soup.text)
+
+            if match:
+                return match.group()
+            else:
+                return "date not found"
+        except AttributeError:
+            return "Error: Unable to parse date"
+    else:
+        return "Error: Unable to retrieve linked page content"
+
 #extract extend
 def extract_extent(linked_page_soup):
   extent_element = linked_page_soup.find("p", string="extent") 
