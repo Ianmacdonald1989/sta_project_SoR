@@ -42,12 +42,30 @@ def extract_date(linked_page_soup):
 
 #extract extend
 def extract_extent(linked_page_soup):
-  extent_element = linked_page_soup.find("p", string="extent") 
+    if linked_page_soup is None:
+        return "Error: Unable to retrieve linked page content"
 
-  if extent_element:
-    return extent_element.text.strip()
-  else:
-    return "extent not found"
+    try:
+        extent_element = linked_page_soup.find("h2", string="Extent").find("p")
+
+        if extent_element:
+            return extent_element.text.strip()
+        else:
+            return "extent not found"
+
+    except (AttributeError, IndexError) as e:
+        return f"Error: Unable to parse extent: {e}"
+
+
+
+
+# def extract_extent(linked_page_soup):
+#   extent_element = linked_page_soup.find("h2", "p", string="") 
+
+#   if extent_element:
+#     return extent_element.text.strip()
+#   else:
+#     return "extent not found"
 
 
 # URL of the HTML page
