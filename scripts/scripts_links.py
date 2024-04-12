@@ -57,17 +57,6 @@ def extract_extent(linked_page_soup):
         return f"Error: Unable to parse extent: {e}"
 
 
-
-
-# def extract_extent(linked_page_soup):
-#   extent_element = linked_page_soup.find("h2", "p", string="") 
-
-#   if extent_element:
-#     return extent_element.text.strip()
-#   else:
-#     return "extent not found"
-
-
 # URL of the HTML page
 url = 'https://spiritofrevolt.info/collection/'
 
